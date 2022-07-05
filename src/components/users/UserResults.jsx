@@ -1,6 +1,10 @@
-import {useEffect} from 'react'
+import { useEffect, useState } from 'react'
 
 function UserResults() {
+  const [users, setUsers] = useState([])
+  // loader for API request
+  const [loading, setLoading] = useState(true)
+
   // execute when component loads
   useEffect(() =>{
     fetchUsers();
@@ -15,7 +19,8 @@ function UserResults() {
 
     const data = await response.json();
 
-    console.log(data);
+    setUsers(data);
+    setLoading(false);
   }
 
   return (
