@@ -37,3 +37,10 @@ export const GithubProvider = ( { children } ) => {
 }
 
 export default GithubContext;
+
+// To use the Context:
+// In App.js:
+// import GithubProvider, and wrap it around the children that need access to the data in the Context
+// In components
+// import GithubContext & useContext hook
+// specify the data that you want: E.g. - const { users, loading, fetchUsers } = useContext(GithubContext)
