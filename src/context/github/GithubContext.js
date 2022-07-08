@@ -1,5 +1,6 @@
 // 1. import the createContect function from react
-import { createContext, useState } from 'react'
+import { createContext, useReducer } from 'react'
+import githubReducer from './GithubReducer'
 
 // 2. Create the context
 const GithubContext = createContext()
@@ -9,8 +10,12 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 
 // 3. Export provider function
 export const GithubProvider = ( { children } ) => {
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)   // loader for API request
+  const initialState = {
+    users: [],
+    loading: true
+  }
+  // dispatch is a useReducer hook function that dispatches an action to the reducer
+  const [state, dispatch] = useReducer(githubReducer, initialState)
 
   const fetchUsers = async () => {
     const response = await fetch(`${GITHUB_URL}/users`, {
@@ -21,14 +26,17 @@ export const GithubProvider = ( { children } ) => {
 
     const data = await response.json();
 
-    setUsers(data);
-    setLoading(false);
+    // dispatch takes an action object (type is an uppercase string)
+    dispatch({
+      type: 'GET_USERS',
+      payload: data
+    })
   }
 
   return <GithubContext.Provider value={
     {
-      users,
-      loading,
+      users: state.users,
+      loading: state.loading,
       fetchUsers
     }
   }>
