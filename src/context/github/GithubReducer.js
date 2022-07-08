@@ -2,6 +2,8 @@
 // Reducers are pure functions we use to manipulate the state.
 // It accepts 2 parameters: the current state & an action object
 // The action is an object that has a type, which is just a string
+// https://www.robinwieruch.de/javascript-reducer/
+
 const githubReducer = (state, action) => {
   // check the action type
   switch(action.type) {
