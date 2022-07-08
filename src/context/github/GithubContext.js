@@ -29,7 +29,7 @@ export const GithubProvider = ( { children } ) => {
     // dispatch takes an action object (type is an uppercase string)
     dispatch({
       type: 'GET_USERS',
-      payload: data
+      payload: data // The payload is additional information to perform the state transition (optional).
     })
   }
 
