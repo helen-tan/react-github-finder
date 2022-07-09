@@ -24,6 +24,7 @@ export const GithubProvider = ( { children } ) => {
     })
   }
 
+  // Get initial users (testing purposes)
   const fetchUsers = async () => {
     setLoading()
 
