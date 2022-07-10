@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import GithubContext from '../../context/github/GithubContext'
 
 function UserSearch() {
   // form inputs are component level state
   const [text, setText] = useState('')
+
+  const { users } = useContext(GithubContext)
 
   const handleChange = (e) => {
     // update the text state to whatever user input in the search bar
@@ -44,12 +47,14 @@ function UserSearch() {
         </form>
       </div>
 
-      {/* Clear button */}
-      <div>
-        <button className="btn btn-ghost btn-lg">
-          Clear
-        </button>
-      </div>
+      {/* Clear button (show only when there are users in the state) */}
+      {users.length > 0 && (
+        <div>
+          <button className="btn btn-ghost btn-lg">
+            Clear
+          </button>
+        </div>
+      )}
     </div>
   )
 }
