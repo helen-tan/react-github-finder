@@ -5,7 +5,7 @@ function UserSearch() {
   // form inputs are component level state
   const [text, setText] = useState('')
 
-  const { users } = useContext(GithubContext)
+  const { users, searchUsers } = useContext(GithubContext)
 
   const handleChange = (e) => {
     // update the text state to whatever user input in the search bar
@@ -18,8 +18,8 @@ function UserSearch() {
     if (text === '') {
       alert('Please enter something')
     } else {
-      // @todo - search users
-
+      // search users
+      searchUsers(text)
       // Set text state back to empty
       setText("")
     }
