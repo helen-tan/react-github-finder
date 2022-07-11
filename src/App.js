@@ -5,27 +5,30 @@ import NotFound from './pages/NotFound';
 import Navbar from './components/layouts/Navbar'
 import Footer from './components/layouts/Footer'
 import { GithubProvider } from './context/github/GithubContext'
+import { AlertProvider } from './context/alert/AlertContext'
 
 function App() {
   return (
     <GithubProvider>
-      <Router>
-        <div className='flex flex-col justify-between h-screen'>
-          <Navbar />
+      <AlertProvider>
+        <Router>
+          <div className='flex flex-col justify-between h-screen'>
+            <Navbar />
 
-          <main className='container mx-auto px-3 pb-12'>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/notfound' element={<NotFound />} />
-              <Route path='/*' element={<NotFound />} /> {/*A catch all - if user goes to any route that doesn't exist */}
-            </Routes>
-          </main>
+            <main className='container mx-auto px-3 pb-12'>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/notfound' element={<NotFound />} />
+                <Route path='/*' element={<NotFound />} /> {/*A catch all - if user goes to any route that doesn't exist */}
+              </Routes>
+            </main>
 
-          <Footer />
-        </div>
+            <Footer />
+          </div>
 
-      </Router>
+        </Router>
+      </AlertProvider>
     </GithubProvider>
   );
 }
