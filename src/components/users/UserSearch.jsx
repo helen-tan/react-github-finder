@@ -5,7 +5,7 @@ function UserSearch() {
   // form inputs are component level state
   const [text, setText] = useState('')
 
-  const { users, searchUsers } = useContext(GithubContext)
+  const { users, searchUsers, clearUsers } = useContext(GithubContext)
 
   const handleChange = (e) => {
     // update the text state to whatever user input in the search bar
@@ -23,6 +23,11 @@ function UserSearch() {
       // Set text state back to empty
       setText("")
     }
+  }
+
+  const handleClick = (e) => {
+    // Clear the users state
+    clearUsers()
   }
 
   return (
@@ -50,7 +55,7 @@ function UserSearch() {
       {/* Clear button (show only when there are users in the state) */}
       {users.length > 0 && (
         <div>
-          <button className="btn btn-ghost btn-lg">
+          <button className="btn btn-ghost btn-lg" onClick={handleClick}>
             Clear
           </button>
         </div>
