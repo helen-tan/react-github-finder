@@ -1,11 +1,13 @@
 import { useState, useContext } from 'react'
 import GithubContext from '../../context/github/GithubContext'
+import AlertContext from '../../context/alert/AlertContext'
 
 function UserSearch() {
   // form inputs are component level state
   const [text, setText] = useState('')
 
   const { users, searchUsers, clearUsers } = useContext(GithubContext)
+  const { setAlert } = useContext(AlertContext)
 
   const handleChange = (e) => {
     // update the text state to whatever user input in the search bar
@@ -16,7 +18,7 @@ function UserSearch() {
     e.preventDefault()
 
     if (text === '') {
-      alert('Please enter something')
+      setAlert('Please enter something', 'error')
     } else {
       // search users
       searchUsers(text)
