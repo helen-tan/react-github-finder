@@ -2,16 +2,18 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa'
 import { useEffect, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import Spinner from '../components/layouts/Spinner'
+import RepoList from "../components/repos/RepoList"
 import GithubContext from '../context/github/GithubContext'
 
 function User() {
-  const { getUser, user, loading } = useContext(GithubContext)
+  const { getUser, user, loading, getUserRepos, repos } = useContext(GithubContext)
   // The useParams hook returns an object of key/value pairs of the dynamic params from the current URL that were matched by the <Route path>.
   // Get all the params from the URL
   const params = useParams()
 
   useEffect(() => {
     getUser(params.login); // Pass the login params from the URL
+    getUserRepos(params.login);
   }, []);
 
   // Destructure from the user object, these:
@@ -150,8 +152,10 @@ function User() {
           </div>
         </div>
       </div>
+
+      <RepoList />
     </div>
-    </>
+  </>
   )
 }
 
