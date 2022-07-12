@@ -13,6 +13,7 @@ export const GithubProvider = ( { children } ) => {
   const initialState = {
     users: [],
     user: {},
+    repos: [],
     loading: false
   }
   // dispatch is a useReducer hook function that dispatches an action to the reducer
@@ -101,15 +102,36 @@ export const GithubProvider = ( { children } ) => {
 
   }
 
+  // Get user repos
+  const getUserRepos = async (login) => {
+    setLoading()
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`
+      }
+    })
+
+    const data = await response.json();
+
+    dispatch({
+      type: 'GET_REPOS',
+      payload: data
+    })
+
+  }
+
   return <GithubContext.Provider value={
     {
       users: state.users,
       loading: state.loading,
       user: state.user,
+      repos: state.repos,
       fetchUsers,
       searchUsers,
       clearUsers,
-      getUser
+      getUser,
+      getUserRepos
     }
   }>
     {children}
