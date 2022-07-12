@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
+import User from './pages/User';
 import Navbar from './components/layouts/Navbar'
 import Footer from './components/layouts/Footer'
 import Alert from './components/layouts/Alert'
@@ -21,6 +22,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
+                <Route path='/user/:login' element={<User />} />
                 <Route path='/notfound' element={<NotFound />} />
                 <Route path='/*' element={<NotFound />} /> {/*A catch all - if user goes to any route that doesn't exist */}
               </Routes>
