@@ -12,6 +12,7 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN
 export const GithubProvider = ( { children } ) => {
   const initialState = {
     users: [],
+    user: {},
     loading: false
   }
   // dispatch is a useReducer hook function that dispatches an action to the reducer
@@ -76,13 +77,39 @@ export const GithubProvider = ( { children } ) => {
     })
   }
 
+  // Get a single user
+  const getUser = async (login) => {
+    setLoading()
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`
+      }
+    })
+
+    // if name/login is not a valid user, redirect to notfound page
+    if(response.status === 404) {
+      window.location = '/notfound'
+    } else {
+      const data = await response.json();
+
+      dispatch({
+        type: 'GET_USER',
+        payload: data
+      })
+    }
+
+  }
+
   return <GithubContext.Provider value={
     {
       users: state.users,
       loading: state.loading,
+      user: state.user,
       fetchUsers,
       searchUsers,
-      clearUsers
+      clearUsers,
+      getUser
     }
   }>
     {children}
