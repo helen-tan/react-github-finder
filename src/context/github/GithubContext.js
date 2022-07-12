@@ -1,5 +1,6 @@
 // 1. import the createContect function from react
 import { createContext, useReducer } from 'react'
+import { createRenderer } from 'react-dom/test-utils'
 import githubReducer from './GithubReducer'
 
 // 2. Create the context
@@ -106,7 +107,12 @@ export const GithubProvider = ( { children } ) => {
   const getUserRepos = async (login) => {
     setLoading()
 
-    const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
+    const params = new URLSearchParams({
+      sort: 'created',
+      per_page: 10
+    })
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`
       }
