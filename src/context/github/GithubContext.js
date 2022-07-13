@@ -1,6 +1,5 @@
 // 1. import the createContect function from react
 import { createContext, useReducer } from 'react'
-import { createRenderer } from 'react-dom/test-utils'
 import githubReducer from './GithubReducer'
 
 // 2. Create the context
@@ -43,31 +42,6 @@ export const GithubProvider = ( { children } ) => {
     dispatch({
       type: 'GET_USERS',
       payload: data // The payload is additional information to perform the state transition (optional).
-    })
-
-  }
-
-  // Get search results
-  const searchUsers = async (text) => {
-    setLoading()
-
-    const params = new URLSearchParams({
-      q: text
-    })
-
-    const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`
-      }
-    })
-
-    // destructuring to get only the 'items' from the returned data
-    const { items } = await response.json();
-
-    // dispatch takes an action object (type is an uppercase string)
-    dispatch({
-      type: 'GET_USERS',
-      payload: items // The payload is additional information to perform the state transition (optional).
     })
 
   }
@@ -129,12 +103,9 @@ export const GithubProvider = ( { children } ) => {
 
   return <GithubContext.Provider value={
     {
-      users: state.users,
-      loading: state.loading,
-      user: state.user,
-      repos: state.repos,
+      ...state,
+      dispatch,
       fetchUsers,
-      searchUsers,
       clearUsers,
       getUser,
       getUserRepos
