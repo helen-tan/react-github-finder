@@ -7,7 +7,7 @@ function UserSearch() {
   // form inputs are component level state
   const [text, setText] = useState('')
 
-  const { users, dispatch, clearUsers } = useContext(GithubContext)
+  const { users, dispatch } = useContext(GithubContext)
   const { setAlert } = useContext(AlertContext)
 
   const handleChange = (e) => {
@@ -38,8 +38,10 @@ function UserSearch() {
   }
 
   const handleClick = (e) => {
-    // Clear the users state
-    clearUsers()
+    // Clear the users state - dispatch action to reducer
+    dispatch({
+      type: 'CLEAR_USERS'
+    })
   }
 
   return (
